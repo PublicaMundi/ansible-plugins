@@ -5,6 +5,7 @@ import json
 
 scalar_types = (basestring, int, float, complex, bool)
 list_types = (list, set, tuple)
+dict_types = (dict,)
 
 unary_ops = {
    'not': operator.not_,
@@ -59,6 +60,11 @@ class FilterModule(object):
             if k:
                 res[k] = x
         return res
+
+    @staticmethod
+    def format_items(it, fmt):
+        '''Format items according to a format string `fmt`'''
+        return [fmt.format(x) for x in it]
 
     @staticmethod
     def flatten_list(l):
@@ -136,6 +142,7 @@ class FilterModule(object):
     def filters(self):
         return {
            'one': self.one,
+           'format_items': self.format_items,
            'flatten_list': self.flatten_list,
            'map_keys': self.map_keys,
            'list_values': self.list_values,
