@@ -120,7 +120,8 @@ class FilterModule(object):
         
         # Done; decode values as JSON if requested
         if decode_json:
-            return {k: json.loads(v) for k, v in res.iteritems()}
+            dec = lambda v: json.loads(v) if v else None
+            return {k: dec(v) for k, v in res.iteritems()}
         else:
             return res
 
